@@ -5,40 +5,54 @@
 <!-- Main body part -->
 {% block content %}
 <h1>Library</h1>
+<p id="intro">
+Here is a list of books and magazines you can loan.
+You can loan 10 books at a time, and 3 magazines at a time. 
+Books can be loaned up to 30 days and magazines 7 days. Happy reading! 
+</p>
 <div id="items-list">
-    <h2>Books</h2>
-    <table>
-        <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Publisher</th>
-            <th>Manage</th>
-        </tr>
-        {% for book in books %}
+    {% if books.count %}
+        <h2>Books</h2>
+        <table>
             <tr>
-                <td>{{book.title}}</td>
-                <td>{{book.author}}</td>
-                <td>{{book.publisher}}</td>
-                <td><a href="{% url "user_app:loan_item" "book" book.id%}">Loan Book</a></td>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Publisher</th>
+                <th>Manage</th>
             </tr>
-        {% endfor %}
-    </table>
+            {% for book in books %}
+                <tr>
+                    <td>{{book.title}}</td>
+                    <td>{{book.author}}</td>
+                    <td>{{book.publisher}}</td>
+                    <td><a href="{% url "user_app:loan_item" "book" book.id%}">Loan Book</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Currently no books to loan. Come back soon!</p>
+    {% endif %}
+    
     <h2>Magazines</h2>
-    <table>
-        <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Publisher</th>
-            <th>Manage</th>
-        </tr>
-        {% for magazine in magazines %}
+    {% if magazines.count %}
+        <table>
             <tr>
-                <td>{{magazine.title}}</td>
-                <td>{{magazine.author}}</td>
-                <td>{{magazine.publisher}}</td>
-                <td><a href="{% url "user_app:loan_item" "magazine" magazine.id%}">Loan Magazine</a></td>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Publisher</th>
+                <th>Manage</th>
             </tr>
-        {% endfor %}
-    </table>
+            {% for magazine in magazines %}
+                <tr>
+                    <td>{{magazine.title}}</td>
+                    <td>{{magazine.author}}</td>
+                    <td>{{magazine.publisher}}</td>
+                    <td><a href="{% url "user_app:loan_item" "magazine" magazine.id%}">Loan Magazine</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Currently no magazines to loan. Come back soon!</p>
+    {% endif %}
 </div>
 {% endblock content %}

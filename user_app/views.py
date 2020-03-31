@@ -166,5 +166,6 @@ def admin(request):
     context = {}
     user = request.user 
     bookloans = BookLoan.objects.filter(returned_timestamp__isnull=True).order_by("loaned_timestamp")
-    context = {"bookloans": bookloans}
+    magazineloans = MagazineLoan.objects.filter(returned_timestamp__isnull=True).order_by("loaned_timestamp")
+    context = {"bookloans": bookloans, "magazineloans": magazineloans}
     return render(request, "user_app/admin.html", context)

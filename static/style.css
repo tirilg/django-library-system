@@ -3,6 +3,10 @@
   font-family: "Roboto", helvetica, arial, sans-serif;
 }
 
+#intro {
+  width: 500px;
+}
+
 h1 {
   color: rgb(0, 134, 164);
 }

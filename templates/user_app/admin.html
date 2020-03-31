@@ -5,9 +5,10 @@
 
 {% block content %}
 <div>
-  <h2>Admin overview</h2>
+  <h1>Admin overview</h1>
   <p>A list of loaned books and magazines.</p>
   <div>
+    <h2>Books</h2>
     {% if bookloans.count %}
       <table>
         <tr>
@@ -28,7 +29,31 @@
         {% endfor %}
       </table>
     {% else %}
-      <p>No books or magazines to return.</p>
+      <p>No books to return.</p>
+    {% endif %}
+    
+    <h2>Magazines</h2>
+    {% if magazineloans.count %}
+      <table>
+        <tr>
+          <th>Loaned by</th>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Publisher</th>
+          <th>Days left</th>
+        </tr>
+        {% for magazineloan in magazineloans %}
+        <tr>
+          <td>{{magazineloan.user.username}}</td>
+          <td>{{magazineloan.magazine.title}}</td>
+          <td>{{magazineloan.magazine.author}}</td>
+          <td>{{magazineloan.magazine.publisher}}</td>
+          <td>{{magazineloan.daysLeft}} </td>
+        </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      <p>No magazines to return.</p>
     {% endif %}
   </div>
 </div>
