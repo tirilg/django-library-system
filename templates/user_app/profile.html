@@ -15,6 +15,7 @@
 
     <table>
         <tr>
+            <th>Type</th>
             <th>Title</th>
             <th>Author</th>
             <th>Publisher</th>
@@ -24,12 +25,24 @@
         </tr>
             {% for bookloan in bookloans %}
                 <tr>
+                    <td>Book</td>
                     <td>{{bookloan.book.title}}</td>
                     <td>{{bookloan.book.author}}</td>
                     <td>{{bookloan.book.publisher}}</td>
                     <td>{{bookloan.loaned_timestamp}}</td>
                     <td>{% if bookloan.returned_timestamp == NULL%} False {% else %} True {% endif %}</td>
                     <td><a href="{% url "user_app:return_item" "book" bookloan.book.id%}">Return</a></td>
+                </tr>
+            {% endfor %}
+            {% for magazineloan in magazineloans %}
+                <tr>
+                    <td>Magazine</td>
+                    <td>{{magazineloan.magazine.title}}</td>
+                    <td>{{magazineloan.magazine.author}}</td>
+                    <td>{{magazineloan.magazine.publisher}}</td>
+                    <td>{{magazineloan.loaned_timestamp}}</td>
+                    <td>{% if magazineloan.returned_timestamp == NULL%} False {% else %} True {% endif %}</td>
+                    <td><a href="{% url "user_app:return_item" "magazine" magazineloan.magazine.id%}">Return</a></td>
                 </tr>
             {% endfor %}
     </table>

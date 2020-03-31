@@ -20,7 +20,7 @@
     <hr>
     <ul>
         {% for magazine in magazines %}
-            <li><a href="#">{{magazine.title}} - {{magazine.author}}</a></li>
+            <li><a href="{% url "user_app:loan_item" "magazine" magazine.id%}">{{magazine.title}} - {{magazine.author}}</a></li>
         {% endfor %}
     </ul>
     <hr>
