@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %} Delete account {% endblock title %}
+
+{% block content %}
+<h1>Delete account</h1>
+<hr>
+
+<form action="{% url 'user_app:delete_account' %}" method="POST">
+    {% csrf_token %}
+    <input type="password" name="password" placeholder="confirm password">
+    <input type="text" name="confirm_deletion" placeholder="type YES">
+    <button>Delete account</button>
+</form>
+
+{% if error_message %} <p>{{error_message}}</p> {% endif %}
+{% endblock content %}

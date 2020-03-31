@@ -11,15 +11,22 @@
     <header>
         <nav>
             <ul>
-                <li><a href="{% url 'library_app:index' %}">Home</a></li>
-                <li><a href="{% url 'user_app:login' %}">Log in</a></li>
-                <li><a href="{% url 'user_app:profile' %}">Profile</a></li>
+                {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'library_app:index' %}">Home</a></li>
+                    <li><a href="{% url 'user_app:profile' %}">Profile</a></li>
+                {% else %}
+                    <li><a href="{% url 'user_app:login' %}">Login</a></li>
+                {% endif %}
+                {% comment %} {% if request.user.is_staff %}  
+                    <li><a href="{% url 'user_app:administrator' %}">Administrator</a></li>
+                {% endif %} {% endcomment %}
             </ul>
         </nav>
     </header>
 
     <main>
         {% block content %}
+        <!--- main content inserted here -->
         {% endblock content %}
     </main>
     <footer></footer>

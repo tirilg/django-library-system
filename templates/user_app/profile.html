@@ -6,8 +6,8 @@
 {% block content %}
 <h1>Profile</h1>
 <ul>
-    <li><a href="{% url 'user_app:logout'%}">Log out</a></li>
-    <li><a href="#">Delete account</a></li>
+    <li><a href="{% url 'user_app:logout' %}">Log out</a></li>
+    <li><a href="{% url 'user_app:delete_account' %}">Delete account</a></li>
 </ul>
 <div>
     <h2>Welcome {{user.username}}</h2>
@@ -29,7 +29,7 @@
                     <td>{{bookloan.book.title}}</td>
                     <td>{{bookloan.book.author}}</td>
                     <td>{{bookloan.book.publisher}}</td>
-                    <td>{{bookloan.daysLeft}} days</td>
+                    <td>{% if bookloan.returned_timestamp is not None %} {% else %} {{bookloan.daysLeft}} days {% endif %}</td>
                     <td>{% if bookloan.returned_timestamp is not None %} Yes {% else %} No {% endif %}</td>
                     <td>{% if bookloan.returned_timestamp is not None %} Returned {% else %}<a href="{% url "user_app:return_item" "book" bookloan.book.id%}">Return</a> {% endif %}</td>
                 </tr>
@@ -40,7 +40,7 @@
                     <td>{{magazineloan.magazine.title}}</td>
                     <td>{{magazineloan.magazine.author}}</td>
                     <td>{{magazineloan.magazine.publisher}}</td>
-                    <td>{{magazineloan.daysLeft}} days</td>
+                    <td>{% if magazineloan.returned_timestamp is not None %} {% else %} {{magazineloan.daysLeft}} days {% endif %}</td>
                     <td>{% if magazineloan.returned_timestamp is not None %} Yes {% else %} No {% endif %}</td>
                     <td>{% if magazineloan.returned_timestamp is not None %} Returned {% else %}<a href="{% url "user_app:return_item" "magazine" magazineloan.magazine.id%}">Return</a> {% endif %}</td>
                 </tr>

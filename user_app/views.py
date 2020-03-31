@@ -6,9 +6,14 @@ from library_app.models import Book, BookLoan, Magazine, MagazineLoan
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+
+# amount of books and magazines a user can loan at a time
 book_limit = 4
 magazine_limit = 2
 
+
+
+####### - Sign up - ####### 
 
 def signup(request): 
     context = {}
@@ -33,8 +38,8 @@ def signup(request):
     return render(request, 'user_app/signup.html', context)
 
 
+####### - Log in - ####### 
 
-# Create your views here.
 def login(request):
     context = {}
     
@@ -53,10 +58,35 @@ def login(request):
     return render(request, "user_app/login.html", context)
 
 
+####### - Log out - ####### 
+
 def logout(request):
     dj_logout(request)
     return HttpResponseRedirect(reverse('user_app:login'))
 
+
+####### - Delete account - ####### 
+
+@login_required
+def delete_account(request):
+    context = {}
+
+    if request.method == "POST":
+        if request.POST['confirm_deletion'] == "YES":
+            user = authenticate(request, username=request.user.username, password=request.POST['password'])
+            if user:
+                user.delete()
+                return HttpResponseRedirect(reverse('user_app:login'))
+            else:
+                context = {"error_message": "Incorrect password"}
+        else:
+            context = {"error_message": "User could not be deleted"}
+
+    return render(request, 'user_app/delete_account.html', context)
+
+
+
+####### - User profile with loaned items - ####### 
 
 @login_required
 def profile(request):
@@ -65,6 +95,11 @@ def profile(request):
     magazineloans = MagazineLoan.objects.filter(user=user)
     context = {"bookloans": bookloans, "magazineloans": magazineloans, "user": user}
     return render(request, "user_app/profile.html", context)
+
+
+
+
+####### - Loan book or magazine - ####### 
 
 @login_required
 def loan_item(request, type, id):
@@ -92,6 +127,9 @@ def loan_item(request, type, id):
             
     return HttpResponseRedirect(reverse("library_app:index"))
 
+
+
+####### - Return loaned book or magazine - ####### 
 
 @login_required
 def return_item(request, type, id):
