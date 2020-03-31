@@ -5,12 +5,13 @@
 <!-- Main page -->
 {% block content %}
 <h1>Profile</h1>
-<ul>
-    <li><a href="{% url 'user_app:logout' %}">Log out</a></li>
-    <li><a href="{% url 'user_app:delete_account' %}">Delete account</a></li>
-</ul>
 <div>
-    <h2>Welcome {{user.username}}</h2>
+    <h2>Welcome, {{user.username}}.</h2>
+    <ul>
+        <li><a href="{% url 'user_app:logout' %}">Log out</a></li>
+        <li><a href="{% url 'user_app:delete_account' %}">Delete account</a></li>
+    </ul>
+    <p>This is a history of your loaned books and magazines.</p>
     <div>
 
     <table>

@@ -5,8 +5,8 @@ from datetime import datetime, timedelta
 # Create your models here.
 
 loan_days_limit = {
-    "book": 2,
-    "magazine": 4
+    "book": 30,
+    "magazine": 7
 }
 
 class Book(models.Model):

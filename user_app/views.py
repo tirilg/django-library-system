@@ -8,10 +8,8 @@ from django.utils import timezone
 
 
 # amount of books and magazines a user can loan at a time
-book_limit = 4
-magazine_limit = 2
-
-
+book_limit = 10
+magazine_limit = 3
 
 ####### - Sign up - ####### 
 
@@ -91,8 +89,8 @@ def delete_account(request):
 @login_required
 def profile(request):
     user = request.user
-    bookloans = BookLoan.objects.filter(user=user)
-    magazineloans = MagazineLoan.objects.filter(user=user)
+    bookloans = BookLoan.objects.filter(user=user).order_by("returned_timestamp")
+    magazineloans = MagazineLoan.objects.filter(user=user).order_by("returned_timestamp")
     context = {"bookloans": bookloans, "magazineloans": magazineloans, "user": user}
     return render(request, "user_app/profile.html", context)
 
@@ -113,6 +111,8 @@ def loan_item(request, type, id):
                 book.is_available = False
                 book.save()
                 BookLoan.objects.create(book=book, user=request.user)
+            else:
+                error = "no"
 
     if type == "magazine":
         magazine = get_object_or_404(Magazine, id=id)
@@ -156,3 +156,15 @@ def return_item(request, type, id):
             loaned_magazine.save()
 
     return HttpResponseRedirect(reverse("user_app:profile"))
+
+
+####### - Admin - ####### 
+
+@login_required
+def admin(request):
+
+    context = {}
+    user = request.user 
+    bookloans = BookLoan.objects.filter(returned_timestamp__isnull=True).order_by("loaned_timestamp")
+    context = {"bookloans": bookloans}
+    return render(request, "user_app/admin.html", context)

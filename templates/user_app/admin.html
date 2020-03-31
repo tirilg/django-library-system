@@ -1,0 +1,35 @@
+{% extends "base.html" %} 
+
+{% block title %}Admin{% endblock title%}
+
+
+{% block content %}
+<div>
+  <h2>Admin overview</h2>
+  <p>A list of loaned books and magazines.</p>
+  <div>
+    {% if bookloans.count %}
+      <table>
+        <tr>
+          <th>Loaned by</th>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Publisher</th>
+          <th>Days left</th>
+        </tr>
+        {% for bookloan in bookloans %}
+        <tr>
+          <td>{{bookloan.user.username}}</td>
+          <td>{{bookloan.book.title}}</td>
+          <td>{{bookloan.book.author}}</td>
+          <td>{{bookloan.book.publisher}}</td>
+          <td>{{bookloan.daysLeft}} </td>
+        </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      <p>No books or magazines to return.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock content %}

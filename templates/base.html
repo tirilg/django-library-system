@@ -17,9 +17,9 @@
                 {% else %}
                     <li><a href="{% url 'user_app:login' %}">Login</a></li>
                 {% endif %}
-                {% comment %} {% if request.user.is_staff %}  
-                    <li><a href="{% url 'user_app:administrator' %}">Administrator</a></li>
-                {% endif %} {% endcomment %}
+                {% if request.user.is_staff %}  
+                    <li><a href="{% url 'user_app:admin' %}">Admin</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>
