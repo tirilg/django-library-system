@@ -5,6 +5,10 @@
 <!-- Main page -->
 {% block content %}
 <h1>Profile</h1>
+<ul>
+    <li><a href="{% url 'user_app:logout'%}">Log out</a></li>
+    <li><a href="#">Delete account</a></li>
+</ul>
 <div>
     <h2>Welcome {{user.username}}</h2>
     <div>
@@ -25,7 +29,7 @@
                     <td>{{bookloan.book.publisher}}</td>
                     <td>{{bookloan.loaned_timestamp}}</td>
                     <td>{% if bookloan.returned_timestamp == NULL%} False {% else %} True {% endif %}</td>
-                    <td><a href="{% url "user_app:return_item" "bookloan" bookloan.book.id%}">Return</a></td>
+                    <td><a href="{% url "user_app:return_item" "book" bookloan.book.id%}">Return</a></td>
                 </tr>
             {% endfor %}
     </table>

@@ -1,11 +1,38 @@
 from django.shortcuts import render, reverse, get_object_or_404
-from django.contrib.auth import authenticate, login as dj_login
+from django.contrib.auth import authenticate, login as dj_login, logout as dj_logout
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from library_app.models import Book, BookLoan
+from django.contrib.auth.models import User
 from django.utils import timezone
 
-book_limit = 2
+book_limit = 4
+magazine_limit = 2
+
+
+def signup(request): 
+    context = {}
+    
+    if request.method == "POST":
+        username = request.POST['user']
+        email = request.POST['email']
+        password = request.POST['password']
+        confirm_password = request.POST['confirm_password']
+
+        if password == confirm_password: 
+            if User.objects.create_user(username, email, password):
+                return HttpResponseRedirect(reverse('user_app:login'))
+            else:
+                context = {
+                    'error': 'Could not create user account - Please try again.'
+                }
+        else:
+            context = {
+                'error': 'Passwords did not match - Please try again.'
+            }
+    return render(request, 'user_app/signup.html', context)
+
+
 
 # Create your views here.
 def login(request):
@@ -24,6 +51,12 @@ def login(request):
             context = {"error_message": "Invalid username or password combination"}
     
     return render(request, "user_app/login.html", context)
+
+
+def logout(request):
+    dj_logout(request)
+    return HttpResponseRedirect(reverse('user_app:login'))
+
 
 @login_required
 def profile(request):
@@ -52,12 +85,12 @@ def loan_item(request, type, id):
 def return_item(request, type, id):
     if type == "book":
         book = get_object_or_404(Book, id=id)
-        books_loaned = BookLoan.objects.filter(book = book, returned_timestamp__isnull=True, user=request.user).count()
-
+        books_loaned = BookLoan.objects.filter(book=book, returned_timestamp__isnull=True, user=request.user).count()
+    
         if books_loaned == 1: 
             book.is_available = True
             book.save()
-            loaned_book = BookLoan.objects.filter(book=book).get(returned_timestamp=True)
+            loaned_book = BookLoan.objects.filter(book=book).get(returned_timestamp__isnull=True)
             loaned_book.returned_timestamp = timezone.now()
             loaned_book.save()
 

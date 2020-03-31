@@ -6,5 +6,14 @@
 {% block content %}
 <h1>Sign up</h1>
 
+<form action="{% url 'user_app:signup' %}" method="POST">
+    {% csrf_token %}
+    <input type="text" name="user" placeholder="username">
+    <input type="email" name="email" placeholder="email">
+    <input type="password" name="password" placeholder="password">
+    <input type="password" name="confirm_password" placeholder="confirm password">
+    <button>Sign up</button>
+</form>
+
 {% if error_message %} <p>{{error_message}}</p> {% endif %}
 {% endblock content %}

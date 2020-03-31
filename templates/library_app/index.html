@@ -4,12 +4,25 @@
 
 <!-- Main body part -->
 {% block content %}
-<h1>Welcome to the library system</h1>
+<h1>Library</h1>
+<p>Click on the book you would like to loan.</p>
 <div id="items-list">
+    <h2>Books</h2>
+    <hr>
     <ul>
         {% for book in books %}
             <li><a href="{% url "user_app:loan_item" "book" book.id%}">{{book.title}} - {{book.author}}</a></li>
         {% endfor %}
     </ul>
+    <hr>
+
+    <h2>Magazines</h2>
+    <hr>
+    <ul>
+        {% for magazine in magazines %}
+            <li><a href="#">{{magazine.title}} - {{magazine.author}}</a></li>
+        {% endfor %}
+    </ul>
+    <hr>
 </div>
 {% endblock content %}
