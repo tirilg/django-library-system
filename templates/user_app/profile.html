@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %} Login {% endblock title %}
+
+<!-- Main page -->
+{% block content %}
+<h1>Profile</h1>
+<div>
+    <h2>Welcome {{user.username}}</h2>
+    <div>
+
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Publisher</th>
+            <th>Days left</th>
+            <th>Returned</th>
+            <th>Manage</th>
+        </tr>
+            {% for bookloan in bookloans %}
+                <tr>
+                    <td>{{bookloan.book.title}}</td>
+                    <td>{{bookloan.book.author}}</td>
+                    <td>{{bookloan.book.publisher}}</td>
+                    <td>{{bookloan.loaned_timestamp}}</td>
+                    <td>{% if bookloan.returned_timestamp == NULL%} False {% else %} True {% endif %}</td>
+                    <td><a href="{% url "user_app:return_item" "bookloan" bookloan.book.id%}">Return</a></td>
+                </tr>
+            {% endfor %}
+    </table>
+        <ul>
+       
+        </ul>
+    </div>
+</div>
+
+{% if error_message %} <p>{{error_message}}</p> {% endif %}
+{% endblock content %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %} Sign up {% endblock title %}
+
+<!-- Main page -->
+{% block content %}
+<h1>Sign up</h1>
+
+{% if error_message %} <p>{{error_message}}</p> {% endif %}
+{% endblock content %}
