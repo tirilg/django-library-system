@@ -105,5 +105,16 @@ def return_item(request, type, id):
             loaned_book = BookLoan.objects.filter(book=book).get(returned_timestamp__isnull=True)
             loaned_book.returned_timestamp = timezone.now()
             loaned_book.save()
+    
+    if type == "magazine":
+        magazine = get_object_or_404(Magazine, id=id)
+        magazines_loaned = MagazineLoan.objects.filter(magazine=magazine, returned_timestamp__isnull=True, user=request.user).count()
+
+        if magazines_loaned == 1:
+            magazine.is_available = True
+            magazine.save()
+            loaned_magazine = MagazineLoan.objects.filter(magazine=magazine).get(returned_timestamp__isnull=True)
+            loaned_magazine.returned_timestamp = timezone.now()
+            loaned_magazine.save()
 
     return HttpResponseRedirect(reverse("user_app:profile"))

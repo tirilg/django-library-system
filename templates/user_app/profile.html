@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %} Login {% endblock title %}
+{% block title %} Profile {% endblock title %}
 
 <!-- Main page -->
 {% block content %}
@@ -29,9 +29,9 @@
                     <td>{{bookloan.book.title}}</td>
                     <td>{{bookloan.book.author}}</td>
                     <td>{{bookloan.book.publisher}}</td>
-                    <td>{{bookloan.loaned_timestamp}}</td>
-                    <td>{% if bookloan.returned_timestamp == NULL%} False {% else %} True {% endif %}</td>
-                    <td><a href="{% url "user_app:return_item" "book" bookloan.book.id%}">Return</a></td>
+                    <td>{{bookloan.daysLeft}} days</td>
+                    <td>{% if bookloan.returned_timestamp is not None %} Yes {% else %} No {% endif %}</td>
+                    <td>{% if bookloan.returned_timestamp is not None %} Returned {% else %}<a href="{% url "user_app:return_item" "book" bookloan.book.id%}">Return</a> {% endif %}</td>
                 </tr>
             {% endfor %}
             {% for magazineloan in magazineloans %}
@@ -40,15 +40,12 @@
                     <td>{{magazineloan.magazine.title}}</td>
                     <td>{{magazineloan.magazine.author}}</td>
                     <td>{{magazineloan.magazine.publisher}}</td>
-                    <td>{{magazineloan.loaned_timestamp}}</td>
-                    <td>{% if magazineloan.returned_timestamp == NULL%} False {% else %} True {% endif %}</td>
-                    <td><a href="{% url "user_app:return_item" "magazine" magazineloan.magazine.id%}">Return</a></td>
+                    <td>{{magazineloan.daysLeft}} days</td>
+                    <td>{% if magazineloan.returned_timestamp is not None %} Yes {% else %} No {% endif %}</td>
+                    <td>{% if magazineloan.returned_timestamp is not None %} Returned {% else %}<a href="{% url "user_app:return_item" "magazine" magazineloan.magazine.id%}">Return</a> {% endif %}</td>
                 </tr>
             {% endfor %}
-    </table>
-        <ul>
-       
-        </ul>
+        </table>
     </div>
 </div>
 

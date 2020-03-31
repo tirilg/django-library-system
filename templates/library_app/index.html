@@ -5,24 +5,45 @@
 <!-- Main body part -->
 {% block content %}
 <h1>Library</h1>
-<p>Click on the book you would like to loan.</p>
 <div id="items-list">
     <h2>Books</h2>
     <hr>
-    <ul>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Publisher</th>
+            <th>Manage</th>
+        </tr>
         {% for book in books %}
-            <li><a href="{% url "user_app:loan_item" "book" book.id%}">{{book.title}} - {{book.author}}</a></li>
+            <tr>
+                <td>{{book.title}}</td>
+                <td>{{book.author}}</td>
+                <td>{{book.publisher}}</td>
+                <td><a href="{% url "user_app:loan_item" "book" book.id%}">Loan Book</a></td>
+            </tr>
         {% endfor %}
-    </ul>
+    </table>
     <hr>
 
     <h2>Magazines</h2>
     <hr>
-    <ul>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Publisher</th>
+            <th>Manage</th>
+        </tr>
         {% for magazine in magazines %}
-            <li><a href="{% url "user_app:loan_item" "magazine" magazine.id%}">{{magazine.title}} - {{magazine.author}}</a></li>
+            <tr>
+                <td>{{magazine.title}}</td>
+                <td>{{magazine.author}}</td>
+                <td>{{magazine.publisher}}</td>
+                <td><a href="{% url "user_app:loan_item" "magazine" magazine.id%}">Loan Magazine</a></td>
+            </tr>
         {% endfor %}
-    </ul>
+    </table>
     <hr>
 </div>
 {% endblock content %}

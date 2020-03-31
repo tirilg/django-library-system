@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static "global/style.css" %}">
     <title>{% block title %} <!--- title inserted from other template --> {% endblock title %} - Library</title>
 </head>
 <body>
@@ -10,7 +12,6 @@
         <nav>
             <ul>
                 <li><a href="{% url 'library_app:index' %}">Home</a></li>
-                <li><a href="{% url 'user_app:signup' %}">Sign up</a></li>
                 <li><a href="{% url 'user_app:login' %}">Log in</a></li>
                 <li><a href="{% url 'user_app:profile' %}">Profile</a></li>
             </ul>

@@ -5,11 +5,16 @@
 <!-- Main page -->
 {% block content %}
 <h1>Log in</h1>
+<hr>
+<p>Do not have a user account? <a href="{% url 'user_app:signup' %}">Sign up here</a></p>
+
 <form action="{% url "user_app:login" %}" method="POST">
     {% csrf_token %}
     <input type="text" name="username" placeholder="username">
     <input type="password" name="password" placeholder="password">
     <button>Login</button>
 </form>
+
+
 {% if error_message %} <p>{{error_message}}</p> {% endif %}
 {% endblock content %}
