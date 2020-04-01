@@ -1,11 +1,10 @@
 from django.shortcuts import render, reverse, get_object_or_404
-from django.contrib.auth import authenticate, login as dj_login, logout as dj_logout
-from django.http import HttpResponseRedirect
-from django.contrib.auth.decorators import login_required
-from library_app.models import Book, BookLoan, Magazine, MagazineLoan
+from django.contrib.auth import authenticate, update_session_auth_hash, login as dj_login, logout as dj_logout
 from django.contrib.auth.models import User
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from django.utils import timezone
+from library_app.models import Book, BookLoan, Magazine, MagazineLoan
 
 
 # amount of books and magazines a user can loan at a time
@@ -131,8 +130,6 @@ def profile(request):
     magazineloans = MagazineLoan.objects.filter(user=user).order_by("returned_timestamp")
     context = {"bookloans": bookloans, "magazineloans": magazineloans, "user": user}
     return render(request, "user_app/profile.html", context)
-
-
 
 
 ####### - Loan book or magazine - ####### 

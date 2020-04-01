@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.http import HttpResponseRedirect
-from . models import Book, BookLoan, Magazine, MagazineLoan
 from django.contrib.auth.decorators import login_required
+from . models import Book, BookLoan, Magazine, MagazineLoan
 
 # Create your views here.
 
