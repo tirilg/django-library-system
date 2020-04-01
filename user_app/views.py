@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from library_app.models import Book, BookLoan, Magazine, MagazineLoan
 from django.contrib.auth.models import User
+from django.contrib.auth import update_session_auth_hash
 from django.utils import timezone
 
 
@@ -54,6 +55,43 @@ def login(request):
             context = {"error_message": "Invalid username or password combination"}
     
     return render(request, "user_app/login.html", context)
+
+
+####### - Change password - ####### 
+
+@login_required
+def change_password(request):
+    context = {}
+
+    if request.method == "POST":
+        old_password = request.POST['old_password']
+        new_password = request.POST['new_password']
+        new_password_confirm = request.POST['new_password_confirm']
+
+        # If the "old password" matches the users password
+        if request.user.check_password(old_password):
+
+            # If new passwords match 
+            if new_password == new_password_confirm:
+                user = get_object_or_404(User, username=request.user.username)
+                user.set_password(new_password)
+                user.save()
+
+                context = {"error_message": "Password changed"}
+
+                # Stay logged in after a password change
+                update_session_auth_hash(request, user)
+                return HttpResponseRedirect(reverse('user_app:profile'))
+
+            # Passwords do not match
+            else:
+                context = {"error_message": "Passwords do not match"}
+
+        # Wrong current password
+        else:
+            context = {"error_message": "Wrong password"}
+
+    return render(request, 'user_app/change_password.html', context)
 
 
 ####### - Log out - ####### 
