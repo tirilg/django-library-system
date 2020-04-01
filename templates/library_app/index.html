@@ -38,14 +38,12 @@ Books can be loaned up to 30 days and magazines 7 days. Happy reading!
         <table>
             <tr>
                 <th>Title</th>
-                <th>Author</th>
                 <th>Publisher</th>
                 <th>Manage</th>
             </tr>
             {% for magazine in magazines %}
                 <tr>
                     <td>{{magazine.title}}</td>
-                    <td>{{magazine.author}}</td>
                     <td>{{magazine.publisher}}</td>
                     <td><a href="{% url "user_app:loan_item" "magazine" magazine.id%}">Loan Magazine</a></td>
                 </tr>

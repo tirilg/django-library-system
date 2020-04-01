@@ -20,12 +20,11 @@ class Book(models.Model):
 
 class Magazine(models.Model):
     title = models.CharField(max_length=200)
-    author = models.CharField(max_length=200)
     publisher = models.CharField(max_length=200)
     is_available = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.title} - {self.author}"
+        return f"{self.title} - {self.publisher}"
 
 class BookLoan(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

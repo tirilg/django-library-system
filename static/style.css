@@ -32,6 +32,10 @@ li a {
   padding: 10px;
 }
 
+li a:hover {
+  background-color: lightblue;
+}
+
 table {
   border-collapse: collapse;
   width: 100%;

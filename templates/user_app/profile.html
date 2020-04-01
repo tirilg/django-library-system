@@ -13,40 +13,55 @@
     </ul>
     <p>This is a history of your loaned books and magazines.</p>
     <div>
-
-    <table>
-        <tr>
-            <th>Type</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Publisher</th>
-            <th>Days left</th>
-            <th>Returned</th>
-            <th>Manage</th>
-        </tr>
+        <h3>Books</h3>
+        {% if bookloans.count %}
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Publisher</th>
+                <th>Days left</th>
+                <th>Returned</th>
+                <th>Manage</th>
+            </tr>
             {% for bookloan in bookloans %}
-                <tr>
-                    <td>Book</td>
-                    <td>{{bookloan.book.title}}</td>
-                    <td>{{bookloan.book.author}}</td>
-                    <td>{{bookloan.book.publisher}}</td>
-                    <td>{% if bookloan.returned_timestamp is not None %} {% else %} {{bookloan.daysLeft}} days {% endif %}</td>
-                    <td>{% if bookloan.returned_timestamp is not None %} Yes {% else %} No {% endif %}</td>
-                    <td>{% if bookloan.returned_timestamp is not None %} Returned {% else %}<a href="{% url "user_app:return_item" "book" bookloan.book.id%}">Return</a> {% endif %}</td>
-                </tr>
-            {% endfor %}
-            {% for magazineloan in magazineloans %}
-                <tr>
-                    <td>Magazine</td>
-                    <td>{{magazineloan.magazine.title}}</td>
-                    <td>{{magazineloan.magazine.author}}</td>
-                    <td>{{magazineloan.magazine.publisher}}</td>
-                    <td>{% if magazineloan.returned_timestamp is not None %} {% else %} {{magazineloan.daysLeft}} days {% endif %}</td>
-                    <td>{% if magazineloan.returned_timestamp is not None %} Yes {% else %} No {% endif %}</td>
-                    <td>{% if magazineloan.returned_timestamp is not None %} Returned {% else %}<a href="{% url "user_app:return_item" "magazine" magazineloan.magazine.id%}">Return</a> {% endif %}</td>
-                </tr>
+            <tr>
+                <td>{{bookloan.book.title}}</td>
+                <td>{{bookloan.book.author}}</td>
+                <td>{{bookloan.book.publisher}}</td>
+                <td>{% if bookloan.returned_timestamp is not None %} {% else %} {{bookloan.daysLeft}} days {% endif %}</td>
+                <td>{% if bookloan.returned_timestamp is not None %} Yes {% else %} No {% endif %}</td>
+                <td>{% if bookloan.returned_timestamp is not None %} Returned {% else %}<a href="{% url "user_app:return_item" "book" bookloan.book.id%}">Return</a> {% endif %}</td>
+            </tr>
             {% endfor %}
         </table>
+        {% else %}
+            <p>No books to return.</p>
+        {% endif %}
+
+   <h3>Magazines</h3>
+    {% if magazineloans.count %}
+      <table>
+        <tr>
+          <th>Title</th>
+          <th>Publisher</th>
+          <th>Days left</th>
+          <th>Returned</th>
+          <th>Manage</th>
+        </tr>
+        {% for magazineloan in magazineloans %}
+        <tr>
+          <td>{{magazineloan.magazine.title}}</td>
+          <td>{{magazineloan.magazine.publisher}}</td>
+          <td>{% if magazineloan.returned_timestamp is not None %} {% else %} {{magazineloan.daysLeft}} days {% endif %}</td>
+          <td>{% if magazineloan.returned_timestamp is not None %} Yes {% else %} No {% endif %}</td>
+          <td>{% if magazineloan.returned_timestamp is not None %} Returned {% else %}<a href="{% url "user_app:return_item" "magazine" magazineloan.magazine.id%}">Return</a> {% endif %}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      <p>No magazines to return.</p>
+    {% endif %}
     </div>
 </div>
 
