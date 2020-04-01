@@ -111,8 +111,6 @@ def loan_item(request, type, id):
                 book.is_available = False
                 book.save()
                 BookLoan.objects.create(book=book, user=request.user)
-            else:
-                error = "no"
 
     if type == "magazine":
         magazine = get_object_or_404(Magazine, id=id)
@@ -158,7 +156,7 @@ def return_item(request, type, id):
     return HttpResponseRedirect(reverse("user_app:profile"))
 
 
-####### - Admin - ####### 
+####### - Admin page showing loaned items - ####### 
 
 @login_required
 def admin(request):
